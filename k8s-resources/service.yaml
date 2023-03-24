@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sbpart
+spec:
+  type: ClusterIP
+  selector:
+    created_by: Payal
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080      
+      # Optional field
+      # By default and for convenience, the Kubernetes control plane will allocate a port from a range (default: 30000-32767)
