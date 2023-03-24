@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sb-deployment
+  labels:
+    created_by: Payal
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      created_by: Payal
+  template:
+    metadata:
+      labels:
+        created_by: Payal
+    spec:
+      containers:
+      - name: springboot
+        image: payalk16/trafficspringboot:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: dotfile-secret
+              key: database_secret
+        - name: SPRING_DATASOURCE_URL
+          valueFrom: 
+            configMapKeyRef:
+              name: springcm
+              key: db_url
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: springcm
+              key: db_username
